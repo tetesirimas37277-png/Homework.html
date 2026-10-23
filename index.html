@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1E3A8A">
+<title>AI Student Life Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* ==================== ตัวแปรสีและรูปแบบพื้นฐาน ==================== */
+:root{--navy:#1E3A8A;--blue:#2563EB;--pale:#EEF4FF;--white:#fff;--ink:#172554;--muted:#64748b;--line:#dbe5f5;--red:#dc2626;--yellow:#d97706;--green:#15803d;--purple:#7c3aed;--shadow:0 14px 40px rgba(30,58,138,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;font-family:'Prompt',sans-serif;color:var(--ink);background:#f8faff;line-height:1.65}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.container{width:min(1160px,92%);margin:auto}.section{padding:76px 0}.section-head{text-align:center;margin-bottom:34px}.section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);margin:0 0 6px;color:var(--navy)}.section-head p{margin:0;color:var(--muted)}.eyebrow{color:var(--blue);font-weight:600;font-size:.9rem}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:13px;padding:12px 19px;background:var(--blue);color:#fff;font-weight:600;box-shadow:0 8px 18px #2563eb26;transition:.2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}.btn.light{background:#fff;color:var(--navy)}.btn.outline{background:#fff;color:var(--blue);border:1px solid #bfdbfe;box-shadow:none}.btn.small{padding:7px 11px;border-radius:9px;font-size:.88rem}.muted{color:var(--muted)}.hidden{display:none!important}
+/* ==================== Navbar ==================== */
+.navbar{position:sticky;top:0;z-index:20;background:#ffffffed;backdrop-filter:blur(14px);border-bottom:1px solid #e5edfb}.nav-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--navy);white-space:nowrap}.brand-icon{width:42px;height:42px;border-radius:13px;background:#dbeafe;display:grid;place-items:center;color:var(--blue);font-size:1.25rem}.nav-links{display:flex;gap:23px;color:#475569;font-size:.92rem}.nav-links a:hover{color:var(--blue)}.nav-actions{display:flex;align-items:center;gap:10px}.profile-pill{font-size:.82rem;color:var(--navy);background:#eff6ff;padding:7px 10px;border-radius:10px}.hamburger{display:none;background:white;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--navy)}
+/* ==================== Hero และม็อกอัปแดชบอร์ด ==================== */
+.hero{padding:58px 0 72px;background:radial-gradient(circle at 82% 20%,#dbeafe 0,transparent 33%),linear-gradient(180deg,#f3f7ff,#fff)}.hero-grid{display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;gap:48px}.handwriting{font-size:1rem;color:var(--blue);font-weight:500;transform:rotate(-2deg);display:inline-block}.hero h1{font-size:clamp(2.2rem,4.2vw,3.7rem);line-height:1.15;margin:14px 0;color:var(--navy);letter-spacing:-1px}.hero h1 span{color:var(--blue)}.hero h2{font-size:1.18rem;line-height:1.6;margin:0 0 13px}.hero-copy{color:#64748b;max-width:540px}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.hero-visual{position:relative;min-height:390px;display:flex;align-items:center;justify-content:center}.watermark{position:absolute;right:2px;top:-14px;color:#2563eb19;font-weight:700;font-size:1.7rem;letter-spacing:2px}.laptop{width:88%;max-width:560px;position:relative;z-index:1}.screen{background:#fff;border:7px solid #23345c;border-bottom-width:12px;border-radius:18px;padding:14px;box-shadow:var(--shadow);display:grid;grid-template-columns:90px 1fr;gap:14px;min-height:290px}.dash-side{background:var(--navy);border-radius:10px;color:white;padding:14px 9px;font-size:.7rem;display:flex;flex-direction:column;gap:16px}.dash-side i{margin-right:5px}.dash-main h3{margin:0 0 4px;font-size:1rem}.dash-main>p{margin:0 0 12px;color:var(--muted);font-size:.73rem}.mini-task{display:flex;align-items:center;justify-content:space-between;gap:6px;border:1px solid #edf1f8;padding:9px;border-radius:10px;margin:8px 0;font-size:.73rem}.mini-task small{display:block;color:var(--muted)}.status{font-size:.67rem;padding:3px 7px;border-radius:99px;white-space:nowrap;font-weight:600}.urgent{background:#fee2e2;color:#b91c1c}.today{background:#dbeafe;color:#1d4ed8}.soon{background:#fef3c7;color:#92400e}.done{background:#dcfce7;color:#166534}.laptop-base{height:12px;width:106%;margin-left:-3%;background:linear-gradient(#dbe4f1,#94a3b8);border-radius:2px 2px 15px 15px}.phone{position:absolute;z-index:3;right:0;bottom:0;width:190px;background:#fff;border:6px solid #172554;border-radius:28px;padding:17px 12px 14px;box-shadow:0 20px 40px #1e3a8a30}.phone-notch{position:absolute;top:3px;left:50%;transform:translateX(-50%);width:55px;height:8px;background:#172554;border-radius:0 0 8px 8px}.robot{width:60px;height:60px;background:#ede9fe;color:#7c3aed;border-radius:20px;display:grid;place-items:center;font-size:2rem;margin:8px auto}.phone h4{text-align:center;margin:3px 0;font-size:.9rem}.phone p{font-size:.72rem;line-height:1.6;color:#64748b;text-align:center;margin:8px 0 12px}.phone .btn{font-size:.67rem;padding:8px;width:100%;border-radius:9px}.hero-orb{position:absolute;left:0;bottom:25px;width:65px;height:65px;border-radius:50%;background:#dbeafe}
+/* ==================== ปัญหาและแนวทางแก้ไข ==================== */
+.problem-card{background:#fff;border:1px solid #e4ebf8;border-radius:24px;padding:32px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 1fr;gap:32px}.problem-side{padding:6px 20px 6px 4px}.solution-side{border-left:1px solid var(--line);padding:6px 4px 6px 32px}.problem-card h3{margin:0 0 15px;font-size:1.2rem;color:var(--navy)}.problem-list{padding:0;list-style:none;margin:0}.problem-list li{display:flex;gap:10px;margin:13px 0;color:#475569}.problem-list i{color:#ef4444;margin-top:5px}.student-art{font-size:4.2rem;background:#fff1f2;width:110px;height:110px;border-radius:30px;display:grid;place-items:center;margin:20px auto 0}.solution-icon{width:68px;height:68px;border-radius:22px;background:#fef3c7;color:#d97706;display:grid;place-items:center;font-size:2rem;margin-bottom:16px}.solution-side p{color:#475569;margin:0}
+/* ==================== การ์ดฟีเจอร์ ==================== */
+.features{background:#f0f5ff}.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.feature-card{background:#fff;border:1px solid #e4ebf8;border-radius:20px;padding:24px 21px;position:relative;transition:transform .22s,box-shadow .22s}.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}.feature-number{position:absolute;right:18px;top:15px;color:#cbd5e1;font-weight:700;font-size:1.2rem}.feature-icon{width:58px;height:58px;border-radius:20px;display:grid;place-items:center;font-size:1.45rem;margin-bottom:17px}.ic-blue{background:#dbeafe;color:#2563eb}.ic-green{background:#dcfce7;color:#15803d}.ic-purple{background:#ede9fe;color:#7c3aed}.feature-card h3{font-size:1.05rem;line-height:1.5;margin:0 0 9px}.feature-card p{font-size:.88rem;color:#64748b;margin:0}
+/* ==================== ตัวอย่างใช้งานจริง ==================== */
+.demo-section{background:#fff}.demo-intro{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}.demo-intro h3{margin:0;font-size:1.12rem}.demo-grid{display:grid;grid-template-columns:1.05fr .9fr 1.15fr;gap:18px;align-items:stretch}.demo-card{background:#fff;border:1px solid #dce6f7;border-radius:18px;padding:19px;box-shadow:0 7px 24px #1e3a8a0b;min-width:0}.demo-card h3{font-size:1rem;margin:0 0 5px}.demo-card .sub{font-size:.79rem;color:var(--muted);margin:0 0 15px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.78rem}th{text-align:left;color:#64748b;font-weight:500;background:#f8faff}th,td{padding:9px 7px;border-bottom:1px solid #edf1f8;vertical-align:middle}td input,td select{width:100%;min-width:75px;border:1px solid #dbe5f5;border-radius:7px;padding:6px 5px;background:#fff;color:var(--ink);font-size:.76rem}td input[type=number]{min-width:48px;width:60px}.delete-btn{border:0;background:#fee2e2;color:#b91c1c;border-radius:7px;width:27px;height:27px}.demo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.arrow-circle{display:none}.priority-item{display:flex;gap:10px;align-items:flex-start;border:1px solid #edf1f8;border-radius:11px;padding:10px;margin:9px 0}.priority-no{width:27px;height:27px;flex:0 0 27px;display:grid;place-items:center;border-radius:9px;background:#dbeafe;color:var(--blue);font-weight:700;font-size:.8rem}.priority-item strong{font-size:.82rem;display:block;line-height:1.45}.priority-item small{display:block;color:var(--muted);font-size:.72rem}.priority-item .status{display:inline-block;margin-top:4px}.robot-title{display:flex;align-items:center;gap:9px}.robot-title .robot-small{width:39px;height:39px;border-radius:13px;background:#ede9fe;display:grid;place-items:center;color:#7c3aed;font-size:1.3rem}.schedule-table{min-width:380px;font-size:.69rem}.schedule-table th,.schedule-table td{padding:6px 4px;text-align:center}.schedule-table th:first-child,.schedule-table td:first-child{text-align:left;white-space:nowrap}.slot{display:block;border-radius:6px;padding:5px 3px;font-size:.64rem;line-height:1.35;min-height:30px}.slot.class{background:#f1f5f9;color:#64748b}.slot.free{background:#f8fafc;color:#cbd5e1}.slot.red{background:#fee2e2;color:#b91c1c}.slot.green{background:#dcfce7;color:#166534}.slot.orange{background:#ffedd5;color:#9a3412}.rest-note{background:#dcfce7;color:#166534;padding:10px;border-radius:10px;font-size:.78rem;text-align:center;margin-top:14px}.save-note{font-size:.75rem;color:var(--green);margin-top:8px;min-height:20px}
+/* ==================== Footer / CTA ==================== */
+.footer{background:var(--navy);color:#fff;padding:36px 0}.footer-inner{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:22px;align-items:center}.footer-script{font-size:1rem;color:#bfdbfe;transform:rotate(-2deg)}.footer-center{text-align:center}.footer-center h3{margin:0 0 5px}.footer-center p{margin:0;color:#dbeafe;font-size:.88rem}.footer-right{display:flex;align-items:center;justify-content:flex-end;gap:14px;font-size:2rem;color:#bfdbfe}
+/* ==================== หน้าต่างเข้าสู่ระบบ ==================== */
+.modal-backdrop{position:fixed;inset:0;background:#0f172a99;z-index:60;display:grid;place-items:center;padding:18px}.modal{background:#fff;width:min(440px,100%);border-radius:22px;padding:28px;box-shadow:0 30px 80px #0f172a40;position:relative}.modal-close{position:absolute;right:16px;top:14px;border:0;background:#f1f5f9;width:33px;height:33px;border-radius:10px;color:#475569}.modal-logo{width:58px;height:58px;border-radius:18px;background:#dbeafe;color:var(--blue);display:grid;place-items:center;font-size:1.7rem;margin-bottom:12px}.modal h2{margin:0 0 5px;color:var(--navy)}.modal p{font-size:.88rem;color:var(--muted);margin:0 0 20px}.field{display:block;margin:13px 0}.field span{display:block;font-size:.86rem;font-weight:500;margin-bottom:6px}.field input{width:100%;border:1px solid #cbd5e1;border-radius:11px;padding:12px 13px;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb1c}.modal .btn{width:100%;margin-top:8px}.modal-error{color:#b91c1c;font-size:.8rem;min-height:20px;margin-top:6px}.notice{background:#eff6ff;border-radius:11px;padding:11px 12px;font-size:.75rem;color:#1e40af;margin-top:14px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#172554;color:#fff;padding:10px 16px;border-radius:12px;z-index:80;box-shadow:var(--shadow);font-size:.86rem}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s,transform .65s}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1000px){.nav-links{gap:12px;font-size:.83rem}.hero-grid{gap:22px}.phone{width:170px}.feature-grid{grid-template-columns:repeat(2,1fr)}.demo-grid{grid-template-columns:1fr 1fr}.schedule-card{grid-column:1/-1}.footer-inner{grid-template-columns:1fr 1.5fr}.footer-right{grid-column:1/-1;justify-content:center}}
+@media(max-width:720px){.nav-inner{min-height:68px;flex-wrap:wrap}.brand{font-size:.87rem}.brand-icon{width:37px;height:37px}.hamburger{display:block}.nav-links{display:none;order:4;width:100%;padding:0 0 14px;flex-direction:column;gap:0}.nav-links.open{display:flex}.nav-links a{padding:10px 3px;border-top:1px solid #edf1f8}.nav-actions .btn{padding:9px 12px;font-size:.83rem}.profile-pill{display:none}.hero{padding:40px 0 48px}.hero-grid{grid-template-columns:1fr}.hero-copy{text-align:center}.hero-copy p{margin-left:auto;margin-right:auto}.hero-buttons{justify-content:center}.hero-visual{min-height:350px;margin-top:12px}.laptop{width:91%}.screen{grid-template-columns:66px 1fr;padding:10px;min-height:255px;border-width:5px;border-bottom-width:9px}.dash-side{font-size:.59rem;padding:10px 6px}.mini-task{padding:7px;font-size:.65rem}.phone{width:155px;right:-3px;bottom:-4px;padding:15px 9px 11px}.phone p{font-size:.66rem}.phone .robot{width:49px;height:49px;font-size:1.6rem}.watermark{font-size:1.15rem;top:-20px}.section{padding:54px 0}.problem-card{grid-template-columns:1fr;padding:23px;gap:22px}.problem-side{padding:0}.solution-side{border-left:0;border-top:1px solid var(--line);padding:22px 0 0}.student-art{margin:10px auto 0}.feature-grid{grid-template-columns:1fr}.feature-card{padding:21px}.demo-grid{grid-template-columns:1fr}.schedule-card{grid-column:auto}.demo-intro{align-items:flex-start;flex-direction:column}.demo-card{padding:15px}.footer-inner{grid-template-columns:1fr;text-align:center}.footer-right{grid-column:auto;justify-content:center}.footer-script{margin-bottom:4px}.footer-center{order:2}.footer-right{order:3}.demo-card .sub{font-size:.76rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<!-- ==================== Navbar ==================== -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="brand" href="#home"><span class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></span><span>AI Student Life Assistant</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">หน้าแรก</a><a href="#demo">ตารางงาน</a><a href="#demo">จัดลำดับความสำคัญ</a><a href="#demo">แผนรายสัปดาห์</a>
+    </nav>
+    <div class="nav-actions"><span class="profile-pill hidden" id="profilePill"></span><button class="btn small" id="loginButton">เข้าสู่ระบบ</button><button class="hamburger" id="hamburger" aria-label="เปิดเมนู"><i class="fa-solid fa-bars"></i></button></div>
+  </div>
+</header>
+
+<main>
+<!-- ==================== Hero Section ==================== -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="handwriting">เรียนก็ต้องรอด งานก็ต้องทัน!</span>
+      <h1><span>AI</span> Student Life<br>Assistant</h1>
+      <h2>ผู้ช่วยวางแผนการเรียนและจัดการงานสำหรับนักศึกษา</h2>
+      <p class="hero-copy">ให้ AI ช่วยจัดตารางงาน วิเคราะห์ความสำคัญ และวางแผนชีวิตในมหาวิทยาลัยของคุณ ให้เป็นเรื่องง่ายขึ้น</p>
+      <div class="hero-buttons"><button class="btn" id="startButton">เริ่มใช้งานเลย <i class="fa-solid fa-arrow-right"></i></button><a class="btn outline" href="#features">ดูฟีเจอร์ <i class="fa-solid fa-chevron-down"></i></a></div>
+    </div>
+    <div class="hero-visual">
+      <div class="watermark">Plan · Study · Achieve</div><div class="hero-orb"></div>
+      <div class="laptop">
+        <div class="screen">
+          <aside class="dash-side"><div><i class="fa-solid fa-graduation-cap"></i> Student</div><div><i class="fa-solid fa-house"></i> ภาพรวม</div><div><i class="fa-regular fa-calendar"></i> ตารางงาน</div><div><i class="fa-solid fa-list-check"></i> จัดลำดับ</div><div><i class="fa-solid fa-chart-line"></i> ความคืบหน้า</div></aside>
+          <div class="dash-main"><h3>สวัสดี! วันนี้คุณมี 3 งานที่ต้องทำ 👋</h3><p>มาจัดการทีละอย่าง แล้วไปให้ถึงเป้าหมายกัน</p>
+            <div class="mini-task"><span><b>รายงานวิชา A</b><small><i class="fa-regular fa-clock"></i> ใช้เวลา 4 ชม.</small></span><span class="status urgent">ด่วน</span></div>
+            <div class="mini-task"><span><b>งานกลุ่มวิชา C</b><small><i class="fa-regular fa-clock"></i> ใช้เวลา 3 ชม.</small></span><span class="status today">วันนี้</span></div>
+            <div class="mini-task"><span><b>สอบวิชา B</b><small><i class="fa-regular fa-clock"></i> ใช้เวลา 6 ชม.</small></span><span class="status soon">ใกล้ถึง</span></div>
+          </div>
+        </div><div class="laptop-base"></div>
+      </div>
+      <div class="phone"><div class="phone-notch"></div><div class="robot"><i class="fa-solid fa-robot"></i></div><h4>AI แนะนำสำหรับคุณ</h4><p>วันนี้ควรเริ่มทำงานรายงานก่อนนะครับ เพราะใกล้กำหนดส่งที่สุด</p><button class="btn" id="phonePlan">ดูแผนการทำงาน</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ปัญหาและแนวทางแก้ไข ==================== -->
+<section class="section" id="solution">
+ <div class="container">
+  <div class="section-head reveal"><span class="eyebrow">WHY THIS MATTERS</span><h2>เข้าใจปัญหา พร้อมช่วยหาทางออก</h2><p>เปลี่ยนงานที่ดูยุ่งยาก ให้เป็นแผนที่ทำตามได้จริง</p></div>
+  <div class="problem-card reveal">
+   <div class="problem-side"><h3><i class="fa-solid fa-circle-exclamation" style="color:#ef4444"></i> ปัญหาที่ต้องการแก้ไข</h3><ul class="problem-list"><li><i class="fa-solid fa-circle-xmark"></i><span>นักศึกษามีงานหลายวิชา ส่งงานไม่ทัน</span></li><li><i class="fa-solid fa-circle-xmark"></i><span>ลืมกำหนดส่ง และจัดลำดับความสำคัญไม่ถูกต้อง</span></li><li><i class="fa-solid fa-circle-xmark"></i><span>บริหารเวลาไม่ดี ทำให้เกิดความเครียด</span></li></ul><div class="student-art" aria-label="นักศึกษากำลังเครียด">😵‍💫📚</div></div>
+   <div class="solution-side"><div class="solution-icon"><i class="fa-regular fa-lightbulb"></i></div><h3>แนวทางแก้ไข</h3><p>ใช้ AI ช่วยจัดตารางชีวิตและวางแผนการเรียน โดยวิเคราะห์ความเร่งด่วนของงาน และจัดลำดับให้เหมาะสมกับเวลาว่างของแต่ละคน</p><p style="margin-top:16px;color:#2563eb;font-weight:500"><i class="fa-solid fa-check-circle"></i> วางแผนง่ายขึ้น เห็นงานชัดขึ้น ลดการหลงลืม</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- ==================== ฟีเจอร์หลัก ==================== -->
+<section class="section features" id="features">
+ <div class="container"><div class="section-head reveal"><span class="eyebrow">WHAT YOU CAN DO</span><h2>ฟีเจอร์หลักของเรา</h2><p>ครบ จบ ในที่เดียว เพื่อชีวิตนักศึกษาที่ง่ายขึ้น</p></div>
+  <div class="feature-grid">
+   <article class="feature-card reveal"><span class="feature-number">01</span><div class="feature-icon ic-blue"><i class="fa-regular fa-calendar-check"></i></div><h3>ตารางงานและกำหนดส่ง</h3><p>รวมงานทุกวิชา วันสอบ และกิจกรรมไว้ในที่เดียว</p></article>
+   <article class="feature-card reveal"><span class="feature-number">02</span><div class="feature-icon ic-green"><i class="fa-solid fa-list-check"></i></div><h3>ระบบจัดลำดับความสำคัญ</h3><p>วิเคราะห์ความเร่งด่วน และแนะนำว่างานไหนควรทำก่อน</p></article>
+   <article class="feature-card reveal"><span class="feature-number">03</span><div class="feature-icon ic-blue"><i class="fa-regular fa-clock"></i></div><h3>แผนการอ่านหนังสือ & ทำงาน</h3><p>จัดสรรเวลาเป็นรายสัปดาห์ตามเวลาว่างที่มีจริง</p></article>
+   <article class="feature-card reveal"><span class="feature-number">04</span><div class="feature-icon ic-purple"><i class="fa-solid fa-robot"></i></div><h3>ผู้ช่วย AI</h3><p>ถามได้ทุกเรื่อง เช่น “วันนี้ควรเริ่มทำอะไรดี” หรือ “ถ้ามีเวลา 2 ชม. ควรทำอะไร”</p></article>
+  </div>
+ </div>
+</section>
+
+<!-- ==================== ตัวอย่างใช้งานจริง: เพิ่ม/แก้ไขงานและจัดแผนด้วย JavaScript ==================== -->
+<section class="section demo-section" id="demo">
+ <div class="container">
+  <div class="section-head reveal"><span class="eyebrow">TRY IT YOURSELF</span><h2>ตัวอย่างการใช้งานจริง</h2><p>ป้อนข้อมูลงานของคุณ แล้วให้ระบบช่วยวางแผน</p></div>
+  <div class="demo-intro"><div><h3>สวัสดี <span id="studentGreeting">นักศึกษา</span> 👋</h3><div class="muted" style="font-size:.82rem">แก้ไขงาน เพิ่มงาน หรือลบงานได้ ตารางจะคำนวณใหม่โดยอัตโนมัติ</div></div><button class="btn outline small" id="logoutButton" style="display:none"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button></div>
+  <div class="demo-grid">
+   <section class="demo-card"><h3><i class="fa-solid fa-pen-to-square" style="color:#2563eb"></i> 1. กรอกข้อมูลงาน</h3><p class="sub">เลือกวันกำหนดส่งและเวลาที่ต้องใช้</p>
+    <div class="table-wrap"><table><thead><tr><th>งาน / วิชา</th><th>กำหนดส่ง</th><th>ชม.</th><th></th></tr></thead><tbody id="taskRows"></tbody></table></div>
+    <div class="demo-actions"><button class="btn small" id="addTaskButton"><i class="fa-solid fa-plus"></i> เพิ่มงาน</button><button class="btn outline small" id="resetTasksButton">คืนค่าตัวอย่าง</button></div><div class="save-note" id="saveNote">ข้อมูลตัวอย่างพร้อมใช้งาน</div>
+   </section>
+   <section class="demo-card"><div class="robot-title"><div class="robot-small"><i class="fa-solid fa-robot"></i></div><div><h3>2. AI วิเคราะห์และจัดลำดับ</h3><p class="sub" style="margin:0">ประเมินความสำคัญ</p></div></div><div id="priorityList"></div><div class="notice"><i class="fa-solid fa-circle-info"></i> เป็นการจัดลำดับด้วยกติกาตัวอย่างในหน้าเว็บ ไม่ได้เชื่อมต่อโมเดล AI จริง</div></section>
+   <section class="demo-card schedule-card"><h3><i class="fa-solid fa-calendar-week" style="color:#2563eb"></i> 3. ได้แผนรายสัปดาห์</h3><p class="sub">แผนตัวอย่าง จันทร์–ศุกร์ (บล็อกงานคำนวณใหม่ตามรายการ)</p><div class="table-wrap"><table class="schedule-table"><thead id="scheduleHead"></thead><tbody id="scheduleBody"></tbody></table></div><div class="rest-note"><i class="fa-solid fa-mug-hot"></i> มีเวลาพักผ่อนเพียงพอ พร้อมลุยต่อ! 😊</div></section>
+  </div>
+ </div>
+</section>
+</main>
+
+<!-- ==================== Footer / CTA ==================== -->
+<footer class="footer"><div class="container footer-inner"><div class="footer-script">จัดการวันนี้ เพื่ออนาคตที่ดีกว่า ✨</div><div class="footer-center"><h3><i class="fa-solid fa-graduation-cap"></i> AI Student Life Assistant</h3><p>เพราะทุกเป้าหมายของคุณ... เราช่วยจัดการให้ได้</p></div><div class="footer-right"><button class="btn light" id="footerStart">เริ่มใช้งานเลย <i class="fa-solid fa-arrow-right"></i></button><i class="fa-solid fa-graduation-cap"></i></div></div></footer>
+
+<!-- ==================== หน้าต่างสมัครบัญชี / เข้าสู่ระบบผ่าน Backend ==================== -->
+<div class="modal-backdrop hidden" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+ <div class="modal">
+  <button class="modal-close" id="closeModal" aria-label="ปิด"><i class="fa-solid fa-xmark"></i></button>
+  <div class="modal-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+  <h2 id="loginTitle">เข้าสู่ระบบนักศึกษา</h2>
+  <p id="loginDescription">เข้าสู่ระบบด้วยรหัสนักศึกษาและรหัสผ่าน</p>
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+   <button class="btn small" type="button" id="loginTab" style="flex:1">เข้าสู่ระบบ</button>
+   <button class="btn outline small" type="button" id="registerTab" style="flex:1">สมัครบัญชีใหม่</button>
+  </div>
+  <form id="loginForm">
+   <label class="field"><span>รหัสนักศึกษา</span><input id="studentId" autocomplete="username" maxlength="30" required placeholder="กรอกรหัสนักศึกษา"></label>
+   <div id="registerFields" class="hidden">
+    <label class="field"><span>ชื่อ</span><input id="firstName" autocomplete="given-name" maxlength="60" placeholder="ชื่อของคุณ"></label>
+    <label class="field"><span>นามสกุล</span><input id="lastName" autocomplete="family-name" maxlength="60" placeholder="นามสกุลของคุณ"></label>
+   </div>
+   <label class="field"><span>รหัสผ่าน (อย่างน้อย 8 ตัวอักษร)</span><input id="password" type="password" autocomplete="current-password" minlength="8" required placeholder="รหัสผ่านของคุณ"></label>
+   <div class="modal-error" id="loginError"></div>
+   <button class="btn" type="submit" id="submitAuth">เข้าสู่ระบบ <i class="fa-solid fa-arrow-right"></i></button>
+  </form>
+  <div class="notice"><i class="fa-solid fa-shield-halved"></i> บัญชีและงานจะถูกจัดเก็บในฐานข้อมูลฝั่งเซิร์ฟเวอร์ รหัสผ่านถูกแฮชก่อนบันทึก ห้ามใช้รหัสผ่านเดียวกับบริการสำคัญอื่น</div>
+ </div>
+</div>
+<div class="toast hidden" id="toast" role="status"></div>
+
+<script>
+// ==================== Frontend เชื่อมต่อ Backend API ====================
+const $ = (selector) => document.querySelector(selector);
+const DAYS = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const WEEKDAYS = ['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์'];
+let profile = null, tasks = [], authMode = 'login', toastTimer = null;
+function makeId(){return 'tmp_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function localISO(date){const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,'0'),d=String(date.getDate()).padStart(2,'0');return `${y}-${m}-${d}`;}
+function nextWeekday(target){const date=new Date();date.setHours(12,0,0,0);let delta=(target-date.getDay()+7)%7;if(delta===0)delta=7;date.setDate(date.getDate()+delta);return localISO(date);}
+function defaultTasks(){return [
+ {id:makeId(),name:'รายงานวิชา A',due:nextWeekday(5),hours:4},
+ {id:makeId(),name:'สอบวิชา B',due:nextWeekday(1),hours:6},
+ {id:makeId(),name:'งานกลุ่มวิชา C',due:nextWeekday(3),hours:3}
+];}
+function escapeHTML(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showToast(message){const toast=$('#toast');toast.textContent=message;toast.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.add('hidden'),2800);}
+async function api(url, options={}) {
+ const response = await fetch(url, {credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});
+ let data={};try{data=await response.json();}catch(e){}
+ if(!response.ok) throw new Error(data.error || 'เกิดข้อผิดพลาดจากเซิร์ฟเวอร์');
+ return data;
+}
+function openLogin(mode='login'){$('#loginError').textContent='';$('#loginModal').classList.remove('hidden');setAuthMode(mode);setTimeout(()=>$('#studentId').focus(),50);}
+function closeLogin(){$('#loginModal').classList.add('hidden');}
+function setAuthMode(mode){
+ authMode=mode;const registering=mode==='register';
+ $('#registerFields').classList.toggle('hidden',!registering);
+ $('#firstName').required=registering;$('#lastName').required=registering;
+ $('#password').autocomplete=registering?'new-password':'current-password';
+ $('#loginTitle').textContent=registering?'สมัครบัญชีนักศึกษา':'เข้าสู่ระบบนักศึกษา';
+ $('#loginDescription').textContent=registering?'สร้างบัญชีเพื่อเก็บรายการงานของคุณไว้ในระบบ':'เข้าสู่ระบบด้วยรหัสนักศึกษาและรหัสผ่าน';
+ $('#submitAuth').innerHTML=registering?'สมัครบัญชี <i class="fa-solid fa-user-plus"></i>':'เข้าสู่ระบบ <i class="fa-solid fa-arrow-right"></i>';
+ $('#loginTab').className=registering?'btn outline small':'btn small';
+ $('#registerTab').className=registering?'btn small':'btn outline small';
+}
+function updateProfileUI(){
+ if(profile){
+  $('#loginButton').textContent='บัญชีของฉัน';$('#profilePill').textContent=profile.firstName+' '+profile.lastName;$('#profilePill').classList.remove('hidden');
+  $('#studentGreeting').textContent=profile.firstName;$('#logoutButton').style.display='inline-flex';
+ }else{
+  $('#loginButton').textContent='เข้าสู่ระบบ';$('#profilePill').classList.add('hidden');$('#studentGreeting').textContent='นักศึกษา';$('#logoutButton').style.display='none';
+ }
+}
+function startOrLogin(){if(!profile){openLogin('login');return;}$('#demo').scrollIntoView({behavior:'smooth'});showToast('พร้อมวางแผนแล้ว '+profile.firstName+' 😊');}
+$('#loginButton').addEventListener('click',()=>profile?showToast('เข้าสู่ระบบเป็น '+profile.firstName+' '+profile.lastName):openLogin('login'));
+$('#startButton').addEventListener('click',startOrLogin);$('#footerStart').addEventListener('click',startOrLogin);
+$('#phonePlan').addEventListener('click',()=>$('#demo').scrollIntoView({behavior:'smooth'}));
+$('#closeModal').addEventListener('click',closeLogin);
+$('#loginTab').addEventListener('click',()=>setAuthMode('login'));$('#registerTab').addEventListener('click',()=>setAuthMode('register'));
+$('#loginModal').addEventListener('click',e=>{if(e.target===$('#loginModal'))closeLogin();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin();});
+
+$('#loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();$('#loginError').textContent='';$('#submitAuth').disabled=true;
+ const studentId=$('#studentId').value.trim(),password=$('#password').value;
+ const payload={studentId,password};
+ if(authMode==='register'){payload.firstName=$('#firstName').value.trim();payload.lastName=$('#lastName').value.trim();}
+ try{
+  const result=await api(authMode==='register'?'/api/auth/register':'/api/auth/login',{method:'POST',body:JSON.stringify(payload)});
+  profile=result.user;updateProfileUI();await loadTasks();closeLogin();$('#demo').scrollIntoView({behavior:'smooth'});
+  showToast(authMode==='register'?'สมัครบัญชีสำเร็จ ยินดีต้อนรับ '+profile.firstName:'เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ '+profile.firstName);
+ }catch(err){$('#loginError').textContent=err.message;}
+ finally{$('#submitAuth').disabled=false;}
+});
+$('#logoutButton').addEventListener('click',async()=>{
+ try{await api('/api/auth/logout',{method:'POST',body:'{}'});}catch(e){}
+ profile=null;tasks=[];updateProfileUI();renderAll();showToast('ออกจากระบบแล้ว');
+});
+
+function dueLabel(iso){if(!iso)return 'ไม่ระบุวัน';const d=new Date(iso+'T12:00:00');if(Number.isNaN(d.getTime()))return 'ไม่ระบุวัน';return DAYS[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);}
+function daysLeft(iso){if(!iso)return 999;const today=new Date();today.setHours(0,0,0,0);const due=new Date(iso+'T00:00:00');if(Number.isNaN(due.getTime()))return 999;return Math.ceil((due-today)/86400000);}
+function priority(task){const left=daysLeft(task.due),hours=Math.max(0,Number(task.hours)||0);const score=(left<0?100:Math.max(0,8-left)*10)+Math.min(hours,12)*1.5;let label='ตามกำหนด',cls='done';if(left<=1||score>=75){label='ด่วน';cls='urgent';}else if(left<=3||score>=48){label='ใกล้ถึง';cls='soon';}else if(left<=7){label='วันนี้/เร็ว ๆ นี้';cls='today';}return {left,hours,score,label,cls};}
+function renderTaskRows(){
+ const body=$('#taskRows');
+ if(!tasks.length){body.innerHTML='<tr><td colspan="4" class="muted" style="text-align:center;padding:18px">ยังไม่มีงาน กด “เพิ่มงาน” เพื่อเริ่มต้น</td></tr>';return;}
+ body.innerHTML=tasks.map(t=>`<tr data-id="${escapeHTML(t.id)}"><td><input aria-label="ชื่องาน" data-field="name" value="${escapeHTML(t.name)}" maxlength="100" placeholder="ชื่องาน / วิชา"></td><td><input aria-label="วันกำหนดส่ง" data-field="due" type="date" value="${escapeHTML(t.due||'')}"></td><td><input aria-label="จำนวนชั่วโมง" data-field="hours" type="number" min="0.5" max="100" step="0.5" value="${Math.max(.5,Number(t.hours)||.5)}"></td><td><button class="delete-btn" data-delete="${escapeHTML(t.id)}" aria-label="ลบงาน"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
+}
+function renderPriorities(){
+ const list=$('#priorityList'),sorted=[...tasks].sort((a,b)=>priority(b).score-priority(a).score);
+ if(!sorted.length){list.innerHTML='<p class="muted" style="font-size:.82rem">เพิ่มงานเพื่อให้ระบบช่วยจัดลำดับ</p>';return;}
+ list.innerHTML=sorted.map((t,i)=>{const p=priority(t);return `<div class="priority-item"><div class="priority-no">${i+1}</div><div style="min-width:0;flex:1"><strong>${escapeHTML(t.name||'งานไม่มีชื่อ')}</strong><small>ส่ง ${dueLabel(t.due)} · เหลือ ${p.left<0?'เลยกำหนด '+Math.abs(p.left)+' วัน':p.left===0?'วันนี้':p.left+' วัน'} · ใช้ ${p.hours} ชม.</small><span class="status ${p.cls}">${p.label}</span></div></div>`}).join('');
+}
+function renderSchedule(){
+ $('#scheduleHead').innerHTML='<tr><th>เวลา</th>'+WEEKDAYS.map(d=>`<th>${d}</th>`).join('')+'</tr>';
+ const slots=[['09:00–12:00','morning'],['13:00–16:00','afternoon'],['19:00–22:00','evening']];
+ const ordered=[...tasks].sort((a,b)=>priority(b).score-priority(a).score),workAssignments={};
+ ordered.forEach((t,i)=>{const targetDay=i%5;if(!workAssignments[targetDay])workAssignments[targetDay]=[];workAssignments[targetDay].push(t);});
+ $('#scheduleBody').innerHTML=slots.map(([time,kind])=>`<tr><td>${time}</td>${WEEKDAYS.map((day,dayIndex)=>{
+  if(kind==='morning'&&[0,1,3].includes(dayIndex))return '<td><span class="slot class">เรียน</span></td>';
+  if(kind==='afternoon'&&[1,2].includes(dayIndex))return '<td><span class="slot class">เรียน</span></td>';
+  if(kind!=='evening')return '<td><span class="slot free">ว่าง</span></td>';
+  const t=(workAssignments[dayIndex]||[])[0];if(!t)return '<td><span class="slot free">เวลาว่าง</span></td>';
+  const p=priority(t),color=p.cls==='urgent'?'red':p.cls==='soon'?'orange':'green';
+  return `<td><span class="slot ${color}" title="${escapeHTML(t.name)}">${escapeHTML(t.name)}</span></td>`;
+ }).join('')}</tr>`).join('');
+}
+function renderAll(){renderTaskRows();renderPriorities();renderSchedule();}
+let saveQueue=Promise.resolve();
+function saveTask(task){
+ if(!profile)return Promise.resolve();
+ saveQueue=saveQueue.then(async()=>{
+  if(String(task.id).startsWith('tmp_')){
+   const result=await api('/api/tasks',{method:'POST',body:JSON.stringify({name:task.name,dueDate:task.due,hours:task.hours})});
+   const oldId=String(task.id);
+   task.id=result.task.id;
+   const row=document.querySelector(`#taskRows tr[data-id="${CSS.escape(oldId)}"]`);
+   if(row) row.dataset.id=String(task.id);
+  }else{
+   await api('/api/tasks/'+encodeURIComponent(task.id),{method:'PUT',body:JSON.stringify({name:task.name,dueDate:task.due,hours:task.hours})});
+  }
+  return task;
+ });
+ return saveQueue;
+}
+async function persistTask(task){
+ if(!profile){$('#saveNote').textContent='เข้าสู่ระบบเพื่อบันทึกงานในบัญชีของคุณ';return;}
+ try{await saveTask(task);$('#saveNote').textContent='บันทึกข้อมูลบนเซิร์ฟเวอร์แล้ว ✓';}
+ catch(err){$('#saveNote').textContent='บันทึกไม่สำเร็จ: '+err.message;showToast(err.message);}
+}
+async function loadTasks(){
+ if(!profile){tasks=defaultTasks();renderAll();$('#saveNote').textContent='ตัวอย่างสำหรับผู้เยี่ยมชม — เข้าสู่ระบบเพื่อบันทึกงาน';return;}
+ try{const result=await api('/api/tasks');tasks=result.tasks.map(t=>({id:String(t.id),name:t.name,due:t.dueDate,hours:Number(t.hours)}));renderAll();$('#saveNote').textContent='โหลดงานจากฐานข้อมูลแล้ว ✓';}
+ catch(err){tasks=[];renderAll();$('#saveNote').textContent='โหลดงานไม่สำเร็จ: '+err.message;showToast('ไม่สามารถโหลดงานได้ กรุณาเข้าสู่ระบบใหม่');}
+}
+$('#taskRows').addEventListener('input',e=>{
+ const field=e.target.dataset.field;if(!field)return;const row=e.target.closest('tr'),task=tasks.find(t=>String(t.id)===row?.dataset.id);if(!task)return;
+ task[field]=field==='hours'?Math.max(.5,Math.min(100,Number(e.target.value)||.5)):e.target.value;
+ renderPriorities();renderSchedule();$('#saveNote').textContent='กำลังบันทึก...';
+});
+$('#taskRows').addEventListener('change',async e=>{
+ const field=e.target.dataset.field;if(!field)return;const row=e.target.closest('tr'),task=tasks.find(t=>String(t.id)===row?.dataset.id);if(!task)return;
+ task[field]=field==='hours'?Math.max(.5,Math.min(100,Number(e.target.value)||.5)):e.target.value;
+ renderAll();await persistTask(task);
+});
+$('#taskRows').addEventListener('click',async e=>{
+ const button=e.target.closest('[data-delete]');if(!button)return;const id=button.dataset.delete;
+ try{if(profile&&!String(id).startsWith('tmp_'))await api('/api/tasks/'+encodeURIComponent(id),{method:'DELETE'});tasks=tasks.filter(t=>String(t.id)!==id);renderAll();$('#saveNote').textContent=profile?'บันทึกการลบบนเซิร์ฟเวอร์แล้ว ✓':'ลบงานตัวอย่างแล้ว';showToast('ลบงานแล้ว');}
+ catch(err){showToast(err.message);}
+});
+$('#addTaskButton').addEventListener('click',async()=>{
+ const task={id:makeId(),name:'งานใหม่',due:nextWeekday(5),hours:2};tasks.push(task);renderAll();
+ if(profile)await persistTask(task);else $('#saveNote').textContent='เข้าสู่ระบบเพื่อบันทึกงานนี้';
+ const inputs=$('#taskRows').querySelectorAll('input[data-field="name"]');const last=inputs[inputs.length-1];last?.focus();last?.select();
+});
+$('#resetTasksButton').addEventListener('click',async()=>{
+ if(!confirm('ต้องการแทนที่รายการงานด้วยข้อมูลตัวอย่างหรือไม่?'))return;
+ try{
+  if(profile){for(const t of tasks)if(!String(t.id).startsWith('tmp_'))await api('/api/tasks/'+encodeURIComponent(t.id),{method:'DELETE'});}
+  tasks=defaultTasks();renderAll();
+  if(profile){for(const t of [...tasks])await persistTask(t);}
+  showToast('คืนค่ารายการงานตัวอย่างแล้ว');
+ }catch(err){showToast('รีเซ็ตไม่สำเร็จ: '+err.message);}
+});
+$('#hamburger').addEventListener('click',()=>$('#navLinks').classList.toggle('open'));
+$('#navLinks').querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>$('#navLinks').classList.remove('open')));
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+(async function init(){
+ updateProfileUI();
+ try{const result=await api('/api/auth/me');profile=result.user;updateProfileUI();await loadTasks();}
+ catch(e){profile=null;updateProfileUI();tasks=defaultTasks();renderAll();$('#saveNote').textContent='ตัวอย่างสำหรับผู้เยี่ยมชม — เข้าสู่ระบบเพื่อบันทึกงาน';}
+})();
+</script>
+</body>
+</html>
